@@ -8,8 +8,7 @@ Tables :
 """
 
 import sqlite3
-import hashlib
-import hmac
+import bcrypt
 import secrets
 import os
 from pathlib import Path
@@ -81,7 +80,6 @@ def init_db():
     );
     """)
 
-
     # Migration: add protocol column if missing
     try:
         c.execute("ALTER TABLE patients ADD COLUMN protocol TEXT DEFAULT ''")
@@ -109,15 +107,20 @@ def init_db():
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Helpers
+# Helpers — bcrypt (remplace SHA-256)
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _hash(password: str) -> str:
-    return hashlib.sha256(password.encode()).hexdigest()
+    """Hash un mot de passe avec bcrypt. Retourne une str pour SQLite."""
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
 
 def _check_pwd(plain: str, hashed: str) -> bool:
-    return hmac.compare_digest(_hash(plain), hashed)
+    """Vérifie un mot de passe contre son hash bcrypt."""
+    try:
+        return bcrypt.checkpw(plain.encode(), hashed.encode())
+    except Exception:
+        return False
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -322,6 +325,7 @@ def get_sessions(patient_id: int) -> list[dict]:
 
 # Init automatique
 init_db()
+
 
 def update_patient_protocol(patient_id: int, protocol: str):
     """Met à jour le protocole assigné au patient par le kiné."""
