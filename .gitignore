@@ -1,0 +1,26 @@
+# Secrets & config
+.env
+
+# Base de données locale
+kineassist.db
+users.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# VS Code
+.vscode/
+
+# Anaconda envs
+mediapipe_env/
+# Index RAG
+faiss_index/
+
+# Archives
+*.rar
+*.zip
+
+# Streamlit
+.streamlit/secrets.toml
