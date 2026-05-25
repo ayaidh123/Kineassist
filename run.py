@@ -13,12 +13,16 @@ import http.server
 import socketserver
 import webbrowser
 import time
+import streamlit as st
+import streamlit.components.v1 as components
 
 PORT_LANDING = 8000
 PORT_APP     = 8501
 BASE_DIR     = os.path.dirname(os.path.abspath(__file__))
 
-
+with open("index.html", "r", encoding="utf-8") as f:
+    html_content = f.read()
+    components.html(html_content, height=800, scrolling=True)
 def serve_landing():
     """Sert index.html sur localhost:8000"""
     os.chdir(BASE_DIR)
