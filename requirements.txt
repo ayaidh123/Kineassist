@@ -17,3 +17,4 @@ faiss-cpu>=1.7.4
 reportlab>=4.0.0
 pdfplumber
 python-dotenv>=1.0.0
+mediapipe
