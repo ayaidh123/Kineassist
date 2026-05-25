@@ -16,3 +16,4 @@ faiss-cpu>=1.7.4
 # Rapport PDF
 reportlab>=4.0.0
 pdfplumber
+python-dotenv>=1.0.0
