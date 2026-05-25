@@ -1,26 +1,36 @@
 # Secrets & config
 .env
+.env.*
 
-# Base de données locale
+# Base de données locale & Données Patients
 kineassist.db
 users.json
+*.db
+*.sqlite3
+*.json
 
-# Python
+# Python & Stockage temporaire
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+.pytest_cache/
+.chroma/
 
-# VS Code
+# Fichiers générés (Rapports PDF de test)
+*.pdf
+
+# VS Code & IDEs
 .vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
 
-# Anaconda envs
+# Anaconda & Environnements virtuels
 mediapipe_env/
-# Index RAG
-faiss_index/
-
-# Archives
-*.rar
-*.zip
-
-# Streamlit
-.streamlit/secrets.toml
+env/
+venv/
+.env/

@@ -28,7 +28,6 @@ _ICO_ARROW_L  = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" 
 _ICO_GIFT     = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>'
 _ICO_INFO     = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
 _ICO_CHECK_C  = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
-_ICO_HOME     = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
 
 AUTH_CSS = """
 <style>
@@ -236,18 +235,6 @@ AUTH_CSS = """
     font-family: 'Inter', sans-serif !important;
     font-size: 13px !important;
 }
-
-/* ── Home link ── */
-.ka-home-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; font-weight: 500; color: #717182;
-    text-decoration: none;
-    background: #ffffff; border: 1px solid rgba(0,0,0,.09);
-    border-radius: 9px; padding: 7px 13px;
-    transition: all .15s;
-}
-.ka-home-link:hover { color: #030213; border-color: rgba(0,0,0,.2); background: #f3f4f6; text-decoration: none; }
-.ka-home-wrap { text-align: center; margin-bottom: 18px; }
 </style>
 """
 
@@ -395,12 +382,6 @@ def _show_role_selection():
         </div>
         """, unsafe_allow_html=True)
 
-        st.markdown(f"""
-        <div class="ka-home-wrap">
-          <a href="https://ayaidh123.github.io/Kineassist" target="_self" class="ka-home-link">{_ICO_HOME} Accueil</a>
-        </div>
-        """, unsafe_allow_html=True)
-
         sel = st.session_state.selected_role
         c1, c2 = st.columns(2, gap="medium")
 
@@ -537,12 +518,6 @@ def _show_auth_form():
             st.session_state.selected_role = None
             st.session_state._auth_msg = None
             st.rerun()
-
-        st.markdown(f"""
-        <div class="ka-home-wrap" style="margin-top:10px">
-          <a href="https://ayaidh123.github.io/Kineassist" target="_self" class="ka-home-link">{_ICO_HOME} Accueil</a>
-        </div>
-        """, unsafe_allow_html=True)
 
         _trust_bar()
 
