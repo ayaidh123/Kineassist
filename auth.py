@@ -397,7 +397,7 @@ def _show_role_selection():
 
         st.markdown(f"""
         <div class="ka-home-wrap">
-          <a href="http://localhost:8000" target="_self" class="ka-home-link">{_ICO_HOME} Accueil</a>
+          <a href="/" target="_self" class="ka-home-link">{_ICO_HOME} Accueil</a>
         </div>
         """, unsafe_allow_html=True)
 
@@ -540,7 +540,7 @@ def _show_auth_form():
 
         st.markdown(f"""
         <div class="ka-home-wrap" style="margin-top:10px">
-          <a href="http://localhost:8000" target="_self" class="ka-home-link">{_ICO_HOME} Accueil</a>
+          <a href="/" target="_self" class="ka-home-link">{_ICO_HOME} Accueil</a>
         </div>
         """, unsafe_allow_html=True)
 

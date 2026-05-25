@@ -12,6 +12,14 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+# ── Redirection par paramètre de requête (Query Parameter) ───────────────────
+if "page" in st.query_params:
+    page = st.query_params["page"]
+    if page == "app":
+        st.query_params.clear()
+        st.switch_page("app.py")
+
+
 # ── Masquer la sidebar et le header Streamlit sur la landing ─────────────────
 st.markdown(
     """
