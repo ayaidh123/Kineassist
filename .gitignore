@@ -34,3 +34,11 @@ mediapipe_env/
 env/
 venv/
 .env/
+# Données de référence générées
+data/references/*.npy
+
+# Sons assets (si privés)
+assets/*.wav
+
+# Dossier devcontainer
+.devcontainer/
