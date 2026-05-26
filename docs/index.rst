@@ -57,6 +57,7 @@ la confidentialité des données de santé.
 
    projet
    installation
+   screenshots
    interface
    architecture
    database
@@ -80,6 +81,27 @@ Liens Rapides
      - `Landing Page locale <http://localhost:8000>`_
    * - 🖥️ Application Clinique
      - `Streamlit App locale <http://localhost:8501>`_
+
+----
+
+Auteures
+--------
+
+Ce projet a été développé par deux étudiantes en intelligence artificielle dans le cadre d'un projet académique.
+
+.. list-table::
+   :widths: 20 40 40
+   :header-rows: 1
+
+   * - Auteure
+     - GitHub
+     - LinkedIn
+   * - **Aya IDHAMOUCH** — *AI Engineer*
+     - `@ayaidh123 <https://github.com/ayaidh123>`_
+     - `aya-idhamouch <https://www.linkedin.com/in/aya-idhamouch-22a996319>`_
+   * - **Intissar LAYAD** — *AI Engineer*
+     - `@intissarlayad <https://github.com/intissarlayad>`_
+     - `intissar-layad <https://www.linkedin.com/in/intissar-layad-07444b377>`_
 
 ----
 
