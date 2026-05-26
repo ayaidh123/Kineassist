@@ -1,26 +1,8 @@
-"""
-mailer.py — Envoi d'emails d'invitation via Gmail SMTP
-=======================================================
-Configuration via variables d'environnement :
-  GMAIL_USER = votre.email@gmail.com
-  GMAIL_PASS = votre_mot_de_passe_application
-
-Pour générer un mot de passe d'application Gmail :
-  1. Accédez à myaccount.google.com
-  2. Sécurité > Validation en deux étapes (à activer)
-  3. Sécurité > Mots de passe des applications
-  4. Générez un mot de passe pour « Autre (nom personnalisé) »
-  5. Copiez le code à 16 caractères — c'est votre GMAIL_PASS
-"""
-
+from dotenv import load_dotenv
 import smtplib
 import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-GMAIL_USER = os.getenv("GMAIL_USER", "")
-GMAIL_PASS = os.getenv("GMAIL_PASS", "")
-APP_URL     = os.getenv("APP_URL", "http://localhost:8501")
 
 
 def send_invitation_email(
@@ -29,15 +11,16 @@ def send_invitation_email(
     kine_nom: str,
     token: str,
 ) -> tuple[bool, str]:
-    """
-    Envoie un email d'invitation au patient.
-    Retourne (success: bool, message: str).
-    """
+    
+    # Charger le .env à chaque appel
+    load_dotenv(override=True)
+    
+    GMAIL_USER = os.getenv("GMAIL_USER", "")
+    GMAIL_PASS = os.getenv("GMAIL_PASS", "")
+    APP_URL    = os.getenv("APP_URL", "http://localhost:8501")
+
     if not GMAIL_USER or not GMAIL_PASS:
-        return False, (
-            "GMAIL_USER ou GMAIL_PASS non configuré "
-            "dans les variables d'environnement."
-        )
+        return False, "GMAIL_USER ou GMAIL_PASS non configuré."
 
     activation_link = f"{APP_URL}?token={token}"
     subject = f"KineAssist — {kine_nom} vous invite à rejoindre votre espace de rééducation"
@@ -50,132 +33,50 @@ def send_invitation_email(
   <title>Invitation KineAssist</title>
   <style>
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-
     body {{
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
       background-color: #F0F2F5;
       padding: 40px 16px;
       -webkit-font-smoothing: antialiased;
     }}
-
-    .wrapper {{
-      max-width: 520px;
-      margin: 0 auto;
-    }}
-
-    /* ── Header ── */
+    .wrapper {{ max-width: 520px; margin: 0 auto; }}
     .header {{
       background-color: #0C2340;
       border-radius: 8px 8px 0 0;
       padding: 36px 40px 32px;
     }}
-
     .header-eyebrow {{
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
     }}
-
     .header-eyebrow span {{
-      color: #7DA8D0;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 500;
+      color: #7DA8D0; font-size: 11px; letter-spacing: 0.08em;
+      text-transform: uppercase; font-weight: 500;
     }}
-
-    .header h1 {{
-      color: #FFFFFF;
-      font-size: 22px;
-      font-weight: 500;
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }}
-
-    .header p {{
-      color: #7DA8D0;
-      font-size: 13px;
-    }}
-
-    /* ── Body ── */
-    .body {{
-      background-color: #FFFFFF;
-      padding: 36px 40px;
-    }}
-
-    .body p {{
-      font-size: 15px;
-      line-height: 1.75;
-      color: #4B5563;
-      margin-bottom: 16px;
-    }}
-
-    .body p strong {{
-      font-weight: 500;
-      color: #111827;
-    }}
-
-    /* ── CTA ── */
-    .btn-wrapper {{
-      margin: 28px 0;
-    }}
-
+    .header h1 {{ color: #FFFFFF; font-size: 22px; font-weight: 500; line-height: 1.3; margin-bottom: 6px; }}
+    .header p {{ color: #7DA8D0; font-size: 13px; }}
+    .body {{ background-color: #FFFFFF; padding: 36px 40px; }}
+    .body p {{ font-size: 15px; line-height: 1.75; color: #4B5563; margin-bottom: 16px; }}
+    .body p strong {{ font-weight: 500; color: #111827; }}
+    .btn-wrapper {{ margin: 28px 0; }}
     .btn {{
-      display: inline-block;
-      background-color: #0C2340;
-      color: #FFFFFF;
-      text-decoration: none;
-      padding: 13px 32px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.02em;
+      display: inline-block; background-color: #0C2340; color: #FFFFFF;
+      text-decoration: none; padding: 13px 32px; border-radius: 6px;
+      font-size: 14px; font-weight: 500; letter-spacing: 0.02em;
     }}
-
-    /* ── Note ── */
-    .note {{
-      border-left: 2px solid #D1D5DB;
-      padding: 14px 16px;
-      margin-top: 8px;
-    }}
-
-    .note p {{
-      font-size: 13px;
-      line-height: 1.65;
-      color: #6B7280;
-      margin-bottom: 6px;
-    }}
-
-    .note p:last-child {{
-      margin-bottom: 0;
-    }}
-
-    .note strong {{
-      font-weight: 500;
-      color: #374151;
-    }}
-
-    /* ── Footer ── */
+    .note {{ border-left: 2px solid #D1D5DB; padding: 14px 16px; margin-top: 8px; }}
+    .note p {{ font-size: 13px; line-height: 1.65; color: #6B7280; margin-bottom: 6px; }}
+    .note p:last-child {{ margin-bottom: 0; }}
+    .note strong {{ font-weight: 500; color: #374151; }}
     .footer {{
-      background-color: #FFFFFF;
-      border-top: 1px solid #F3F4F6;
-      border-radius: 0 0 8px 8px;
-      padding: 18px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background-color: #FFFFFF; border-top: 1px solid #F3F4F6;
+      border-radius: 0 0 8px 8px; padding: 18px 40px;
+      display: flex; justify-content: space-between; align-items: center;
     }}
-
-    .footer span {{
-      font-size: 12px;
-      color: #9CA3AF;
-    }}
+    .footer span {{ font-size: 12px; color: #9CA3AF; }}
   </style>
 </head>
 <body>
   <div class="wrapper">
-
     <div class="header">
       <div class="header-eyebrow">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -189,7 +90,6 @@ def send_invitation_email(
       <h1>Votre espace de rééducation personnalisé</h1>
       <p>Plateforme de suivi kinésithérapique</p>
     </div>
-
     <div class="body">
       <p>Bonjour <strong>{patient_nom}</strong>,</p>
       <p>
@@ -200,28 +100,20 @@ def send_invitation_email(
         Cliquez sur le bouton ci-dessous pour définir votre mot de passe
         et accéder à votre espace personnel.
       </p>
-
       <div class="btn-wrapper">
         <a href="{activation_link}" class="btn">Activer mon compte</a>
       </div>
-
       <div class="note">
-        <p>
-          Ce lien est valable <strong>72 heures</strong>. Passé ce délai,
-          veuillez contacter votre praticien pour un nouvel envoi.
-        </p>
-        <p>
-          Pour votre sécurité, votre mot de passe ne sera jamais
-          communiqué à votre praticien.
-        </p>
+        <p>Ce lien est valable <strong>72 heures</strong>. Passé ce délai,
+          veuillez contacter votre praticien pour un nouvel envoi.</p>
+        <p>Pour votre sécurité, votre mot de passe ne sera jamais
+          communiqué à votre praticien.</p>
       </div>
     </div>
-
     <div class="footer">
       <span>KineAssist — Suivi de rééducation</span>
       <span>Ne pas répondre à cet email</span>
     </div>
-
   </div>
 </body>
 </html>"""

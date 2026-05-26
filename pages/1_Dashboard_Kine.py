@@ -723,13 +723,23 @@ with col_detail:
                     )
                     if mail_ok:
                         st.success(f"Patient créé et invitation envoyée à {email} !")
+                        st.session_state.kine_view = "list"
+                        st.rerun()
                     else:
                         APP_URL = os.getenv("APP_URL", "http://localhost:8501")
                         lien = f"{APP_URL}?token={token}"
                         st.warning(f"Patient créé mais email non envoyé : {mail_msg}")
-                        st.info(f"Lien d'activation (à transmettre manuellement) :\n\n`{lien}`")
-                    st.session_state.kine_view = "list"
-                    st.rerun()
+                        st.markdown("### 🔗 Lien d'activation manuel")
+                        st.text_input(
+                            "Copier ce lien et l'envoyer au patient",
+                            value=lien,
+                            key=f"invite_link_{patient_id}"
+                        )
+                        st.link_button(
+                            "Ouvrir le lien",
+                            lien,
+                            use_container_width=True
+                        )
 
         if st.button("Annuler"):
             st.session_state.kine_view = "list"
@@ -838,7 +848,17 @@ with col_detail:
                     APP_URL = os.getenv("APP_URL", "http://localhost:8501")
                     lien = f"{APP_URL}?token={token}"
                     st.warning(f"Email non envoyé : {mail_msg}")
-                    st.code(lien, language=None)
+                    st.markdown("### 🔗 Lien d'activation à transmettre au patient")
+                    st.text_input(
+                        "Copiez ce lien et envoyez-le manuellement au patient",
+                        value=lien,
+                        key=f"resend_link_{patient['id']}"
+                    )
+                    st.link_button(
+                        "Ouvrir le lien",
+                        lien,
+                        use_container_width=True
+                    )
 
         # ── VUE DÉTAIL ────────────────────────────────────────────────────────
         if view == "detail":

@@ -980,9 +980,10 @@ if page == "Tableau de bord":
             unsafe_allow_html=True,
         )
 
-    knee_pct = min(max(int(avg_score) if avg_score else progression_semaine, 0), 100)
-    shoulder_pct = min(max(st.session_state.rep_count * 8, 0), 100)
-    hip_pct = min(max(progression_semaine - 5, 0), 100)
+    has_activity = bool(st.session_state.all_sessions) or bool(st.session_state.scores_history)
+    knee_pct = min(max(int(avg_score) if avg_score else progression_semaine, 0), 100) if has_activity else 0
+    shoulder_pct = min(max(st.session_state.rep_count * 8, 0), 100) if has_activity else 0
+    hip_pct = min(max(progression_semaine - 5, 0), 100) if has_activity else 0
 
     st.markdown(
         f"""
