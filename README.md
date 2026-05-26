@@ -1,6 +1,5 @@
 <div align="center">
-  <img src="assets/logokine.png" alt="KineAssist Logo" width="180" />
-
+<img src="assets/logoKine.png" alt="KineAssist Logo" width="180" />
   <h1>KineAssist</h1>
   <p><strong>Plateforme Web de Kinésithérapie Assistée par Intelligence Artificielle</strong></p>
 
