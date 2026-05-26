@@ -199,14 +199,21 @@ Interface permettant la génération et le téléchargement du bilan patient au 
 
 ## Screenshots
 
-| Page | Aperçu |
-|---|---|
-| Landing page | `assets/screenshots/landing.png` |
-| Authentification | `assets/screenshots/auth.png` |
-| Interface kinésithérapeute | `assets/screenshots/kine_interface.png` |
-| Activation compte patient | `assets/screenshots/activation.png` |
-| Dashboard patient (1) | `assets/screenshots/dashboard.png` |
-| Dashboard patient (2) | `assets/screenshots/dashboard2.png` |
+### Landing page
+![Landing page](assets/screenshots/landing.png)
+
+### Authentification
+![Authentification](assets/screenshots/auth.png)
+
+### Interface kinésithérapeute
+![Interface kinésithérapeute](assets/screenshots/kine_interface.png)
+
+### Activation compte patient
+![Activation compte patient](assets/screenshots/activation.png)
+
+### Dashboard patient
+![Dashboard patient 1](assets/screenshots/dashboard.png)
+![Dashboard patient 2](assets/screenshots/dashboard2.png)
 
 > 📹 Vidéo de démonstration complète : `assets/kine.mp4` *(à venir)*
 
@@ -403,9 +410,7 @@ Ce projet a été développé par deux étudiantes en intelligence artificielle 
 - GitHub : [@intissarlayad](https://github.com/intissarlayad)
 - LinkedIn : [intissar-layad](https://www.linkedin.com/in/intissar-layad-07444b377)
 
-> Projet académique réalisé dans le cadre d'un cursus en intelligence artificielle — axé sur l'application concrète de l'IA au domaine de la santé numérique et de la rééducation à distance.
-
----
+> Projet académique réalisé dans le cadre d'un cours de Computer Vision, dont le domaine d'application — la santé numérique et la rééducation à distance — a été entièrement choisi et conçu par l'équipeLe projet combine MediaPipe, OpenCV et un moteur RAG pour créer une plateforme de suivi kinésithérapeutique : analyse du mouvement en temps réel, scoring des exercices et feedback correctif automatisé.
 
 <div align="center">
   <sub>Built with ❤️ for accessible physiotherapy rehabilitation.</sub>
