@@ -1,6 +1,5 @@
 # Secrets & config
 .env
-.env.*
 
 # Base de données locale & Données Patients
 kineassist.db
