@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schéma de la Base de Données &mdash; Documentation KineAssist 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+    <link rel="shortcut icon" href="_static/logoKine.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=05dadb3a"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=e6b791cb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0d9488" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            KineAssist
+              <img src="_static/logoKine.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Schéma de la Base de Données</a><ul>
+<li><a class="reference internal" href="#architecture-des-tables">1. Architecture des Tables</a><ul>
+<li><a class="reference internal" href="#kines">kines</a></li>
+<li><a class="reference internal" href="#patients">patients</a></li>
+<li><a class="reference internal" href="#invitations">invitations</a></li>
+<li><a class="reference internal" href="#sessions-kine">sessions_kine</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#securite-hachage-cryptographique">2. Sécurité &amp; Hachage Cryptographique</a></li>
+<li><a class="reference internal" href="#processus-d-invitation-d-activation-du-patient">3. Processus d’Invitation &amp; d’Activation du Patient</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #0d9488" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">KineAssist</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Schéma de la Base de Données</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/database.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="schema-de-la-base-de-donnees">
+<h1>Schéma de la Base de Données<a class="headerlink" href="#schema-de-la-base-de-donnees" title="Lien vers cette rubrique"></a></h1>
+<p>La persistance des données dans <strong>KineAssist</strong> s’appuie sur une base de données relationnelle locale <strong>SQLite</strong> gérée de manière dynamique. Le fichier de stockage est nommé <code class="docutils literal notranslate"><span class="pre">kineassist.db</span></code>.</p>
+<p>L’accès à la base de données est centralisé et sécurisé dans le module <code class="docutils literal notranslate"><span class="pre">database.py</span></code>.</p>
+<hr class="docutils" />
+<section id="architecture-des-tables">
+<h2>1. Architecture des Tables<a class="headerlink" href="#architecture-des-tables" title="Lien vers cette rubrique"></a></h2>
+<p>Le schéma relationnel est modélisé pour lier de manière stricte les kinésithérapeutes, les patients qui leur sont affectés, les sessions d’entraînement réalisées et les invitations d’activation de comptes :</p>
+<figure class="align-right">
+<a class="reference internal image-reference" href="_images/logokine.png"><img alt="KineAssist Logo" src="_images/logokine.png" style="width: 80px;" />
+</a>
+</figure>
+<section id="kines">
+<h3>kines<a class="headerlink" href="#kines" title="Lien vers cette rubrique"></a></h3>
+<p>Cette table contient les comptes des professionnels de santé.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> (INTEGER PRIMARY KEY AUTOINCREMENT) : Identifiant unique du kinésithérapeute.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">email</span></code> (TEXT UNIQUE NOT NULL) : Adresse e-mail servant d’identifiant de connexion (insensible à la casse).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nom</span></code> (TEXT NOT NULL) : Nom complet du praticien.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">password_hash</span></code> (TEXT NOT NULL) : Hash sécurisé Bcrypt du mot de passe.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">created_at</span></code> (TEXT DEFAULT) : Date de création du compte.</p></li>
+</ul>
+</section>
+<section id="patients">
+<h3>patients<a class="headerlink" href="#patients" title="Lien vers cette rubrique"></a></h3>
+<p>Cette table stocke les fiches détaillées des patients. Chaque patient est obligatoirement rattaché à un kinésithérapeute référent.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> (INTEGER PRIMARY KEY AUTOINCREMENT) : Identifiant unique du patient.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">email</span></code> (TEXT UNIQUE NOT NULL) : Adresse e-mail du patient.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nom</span></code> (TEXT NOT NULL) : Nom complet.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">age</span></code> (INTEGER DEFAULT 0) : Âge du patient.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pathologie</span></code> (TEXT DEFAULT “”) : Diagnostic médical consigné par le praticien.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exercice</span></code> (TEXT DEFAULT) : Exercice principal prescrit.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">protocol</span></code> (TEXT DEFAULT “”) : Protocole médical ou programme d’exercices complexe associé.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">semaine</span></code> (INTEGER DEFAULT 1) : Numéro de la semaine de rééducation active en cours.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">objectif_semaine</span></code> (INTEGER DEFAULT 8) : Nombre de sessions attendu par semaine.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">password_hash</span></code> (TEXT DEFAULT NULL) : Hash du mot de passe (défini à l’activation).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">activated</span></code> (INTEGER DEFAULT 0) : Drapeau d’activation (0 = invité, 1 = actif).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kine_id</span></code> (INTEGER NOT NULL) : Clé étrangère pointant vers <code class="docutils literal notranslate"><span class="pre">kines.id</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">notes</span></code> (TEXT DEFAULT “”) : Espace de notes cliniques pour le praticien.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alerte</span></code> (INTEGER DEFAULT 0) : Indicateur d’inactivité ou de baisse de performance (1 = alerte active).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">photo_b64</span></code> (TEXT DEFAULT “”) : Photo de profil encodée en base64 pour affichage.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">poids</span></code> (REAL DEFAULT 0) : Poids du patient en kg.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">taille</span></code> (INTEGER DEFAULT 0) : Taille en cm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">telephone</span></code> (TEXT DEFAULT “”) : Numéro de contact.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">antecedents</span></code> (TEXT DEFAULT “”) : Antécédents médicaux déclarés par le patient.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">genre</span></code> (TEXT DEFAULT “”) : Genre.</p></li>
+</ul>
+</section>
+<section id="invitations">
+<h3>invitations<a class="headerlink" href="#invitations" title="Lien vers cette rubrique"></a></h3>
+<p>Gère les jetons (tokens) temporaires permettant d’activer les comptes patients de manière sécurisée sans stocker de mot de passe temporaire en clair.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> (INTEGER PRIMARY KEY AUTOINCREMENT) : Identifiant.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">token</span></code> (TEXT UNIQUE NOT NULL) : Jeton alphanumérique aléatoire sécurisé à sens unique (généré via <code class="docutils literal notranslate"><span class="pre">secrets.token_urlsafe(32)</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">patient_id</span></code> (INTEGER NOT NULL) : Identifiant du patient associé.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">email</span></code> (TEXT NOT NULL) : Adresse e-mail cible.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">expires_at</span></code> (TEXT NOT NULL) : Horodatage d’expiration du jeton (fixé à +72h après création).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">used</span></code> (INTEGER DEFAULT 0) : Drapeau d’utilisation (1 = consommé).</p></li>
+</ul>
+</section>
+<section id="sessions-kine">
+<h3>sessions_kine<a class="headerlink" href="#sessions-kine" title="Lien vers cette rubrique"></a></h3>
+<p>Historique des sessions d’entraînement réalisées par le patient avec estimation automatique des performances.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> (INTEGER PRIMARY KEY AUTOINCREMENT) : Identifiant.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">patient_id</span></code> (INTEGER NOT NULL) : Identifiant du patient ayant exécuté la session.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">date</span></code> (TEXT NOT NULL) : Date de réalisation (au format <code class="docutils literal notranslate"><span class="pre">JJ/MM/AAAA</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">exercice</span></code> (TEXT DEFAULT “”) : Intitulé de l’exercice effectué.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reps</span></code> (INTEGER DEFAULT 0) : Nombre de répétitions validées.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">score_mean</span></code> (REAL DEFAULT 0) : Score de précision moyen calculé sur la session (sur 100).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">score_best</span></code> (REAL DEFAULT 0) : Meilleur score de répétition obtenu.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trend</span></code> (TEXT DEFAULT “stable”) : Évolution de la performance (ex: “amelioration”, “stable”, “baisse”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">semaine</span></code> (INTEGER DEFAULT 1) : Index de la semaine de rééducation au moment de l’exercice.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="securite-hachage-cryptographique">
+<h2>2. Sécurité &amp; Hachage Cryptographique<a class="headerlink" href="#securite-hachage-cryptographique" title="Lien vers cette rubrique"></a></h2>
+<p>KineAssist assure la confidentialité des mots de passe en évitant tout stockage en clair dans SQLite.</p>
+<p>Le module utilise la bibliothèque <strong>Bcrypt</strong> pour appliquer un hachage unidirectionnel lent renforcé par un sel cryptographique aléatoire. Cela protège la base contre les attaques par dictionnaire ou par tables arc-en-ciel.</p>
+<p>Exemple d’implémentation dans <code class="docutils literal notranslate"><span class="pre">database.py</span></code> :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">bcrypt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_hash</span><span class="p">(</span><span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hash un mot de passe avec un sel dynamique et retourne une chaine UTF-8.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">hashpw</span><span class="p">(</span><span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">gensalt</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_pwd</span><span class="p">(</span><span class="n">plain</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hashed</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Vérifie la validité d&#39;un mot de passe contre son empreinte hachée.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">bcrypt</span><span class="o">.</span><span class="n">checkpw</span><span class="p">(</span><span class="n">plain</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">hashed</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="processus-d-invitation-d-activation-du-patient">
+<h2>3. Processus d’Invitation &amp; d’Activation du Patient<a class="headerlink" href="#processus-d-invitation-d-activation-du-patient" title="Lien vers cette rubrique"></a></h2>
+<p>Pour inscrire un nouveau patient :
+1. <strong>Création</strong> : Le kinésithérapeute enregistre le patient avec ses paramètres cliniques fondamentaux.
+2. <strong>Jeton d’activation</strong> : Le système génère automatiquement un token de sécurité unique :</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="n">token</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">expires</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">72</span><span class="p">))</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p><strong>Envoi par E-mail</strong> : Un e-mail contenant le lien sécurisé (valable 72 heures) est envoyé au patient via <code class="docutils literal notranslate"><span class="pre">mailer.py</span></code>.</p></li>
+<li><p><strong>Activation</strong> : Le patient clique sur le lien, saisit son mot de passe personnalisé, ce qui consomme le jeton et active son profil (champ <code class="docutils literal notranslate"><span class="pre">activated</span> <span class="pre">=</span> <span class="pre">1</span></code>).</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2026, Aya IDHAMOUCH.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

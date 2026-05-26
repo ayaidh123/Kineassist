@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interfaces &amp; Design Visuel &mdash; Documentation KineAssist 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+    <link rel="shortcut icon" href="_static/logoKine.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=05dadb3a"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=e6b791cb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0d9488" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            KineAssist
+              <img src="_static/logoKine.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Interfaces &amp; Design Visuel</a><ul>
+<li><a class="reference internal" href="#portail-kinesitherapeute-pages-1-dashboard-kine-py">1. Portail Kinésithérapeute (<cite>pages/1_Dashboard_Kine.py</cite>)</a></li>
+<li><a class="reference internal" href="#portail-patient-app-py">2. Portail Patient (<cite>app.py</cite>)</a></li>
+<li><a class="reference internal" href="#design-systeme-customisation-css">3. Design Système &amp; Customisation CSS</a></li>
+<li><a class="reference internal" href="#retour-audio-multisensoriel-sound-tts-py">4. Retour Audio Multisensoriel (<cite>sound_tts.py</cite>)</a><ul>
+<li><a class="reference internal" href="#sons-wav-integres">Sons WAV intégrés</a></li>
+<li><a class="reference internal" href="#synthese-vocale-native-tts">Synthèse Vocale Native (TTS)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #0d9488" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">KineAssist</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Interfaces &amp; Design Visuel</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/interface.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="interfaces-design-visuel">
+<h1>Interfaces &amp; Design Visuel<a class="headerlink" href="#interfaces-design-visuel" title="Lien vers cette rubrique"></a></h1>
+<p>L’expérience utilisateur de <strong>KineAssist</strong> a été soigneusement élaborée pour offrir une esthétique soignée, s’affranchissant du style Streamlit par défaut au profit d’un design moderne, vivant et fluide.</p>
+<hr class="docutils" />
+<section id="portail-kinesitherapeute-pages-1-dashboard-kine-py">
+<h2>1. Portail Kinésithérapeute (<cite>pages/1_Dashboard_Kine.py</cite>)<a class="headerlink" href="#portail-kinesitherapeute-pages-1-dashboard-kine-py" title="Lien vers cette rubrique"></a></h2>
+<p>Destiné aux professionnels, ce portail sert de cockpit clinique. Il intègre :</p>
+<figure class="align-right">
+<a class="reference internal image-reference" href="_images/logokine.png"><img alt="KineAssist Logo" src="_images/logokine.png" style="width: 80px;" />
+</a>
+</figure>
+<ul class="simple">
+<li><p><strong>Tableau de bord de monitoring</strong> : Synthèse visuelle de l’état de chaque patient (semaine de rééducation en cours, nombre d’entraînements validés par rapport à l’objectif de prescription, moyenne des scores).</p></li>
+<li><p><strong>Graphique d’évolution hebdomadaire</strong> : Un tracé vectoriel des performances moyennes et maximales au fil des séances pour objectiver le progrès clinique.</p></li>
+<li><p><strong>Fiches patients interactives</strong> : Formulaires fluides permettant de mettre à jour la pathologie, l’exercice prescrit, la semaine de rééducation en cours, de consigner des notes d’évolution et d’activer des indicateurs visuels d’alerte en cas de baisse sensible des résultats.</p></li>
+<li><p><strong>Système d’invitation et d’activation</strong> : Interface simplifiée pour enregistrer et inviter par courriel de nouveaux patients en générant un jeton sécurisé.</p></li>
+<li><p><strong>Espace de planification</strong> : Permet au kinésithérapeute d’ajouter des rendez-vous en cabinet.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="portail-patient-app-py">
+<h2>2. Portail Patient (<cite>app.py</cite>)<a class="headerlink" href="#portail-patient-app-py" title="Lien vers cette rubrique"></a></h2>
+<p>L’interface dédiée au patient privilégie la simplicité, la clarté et l’engagement :</p>
+<ul class="simple">
+<li><p><strong>Tableau de bord de synthèse</strong> : Rappel clair du programme prescrit pour la semaine, de l’état de complétion de l’objectif hebdomadaire (jauge de progression) et historique détaillé des dernières séances.</p></li>
+<li><p><strong>Session interactive guidée</strong> :
+*  <strong>Flux vidéo annoté</strong> : Dessine les repères squelettiques et les cercles articulaires colorés selon la justesse posturale (Vert = Correct, Orange = Tolérance franchie, Rouge = Écart critique).
+*  <strong>Zone de retour (Feedback)</strong> : Affiche des messages de correction issus du moteur RAG en superposition semi-transparente directement sur l’image.
+*  <strong>Panneau latéral de métriques</strong> : Visualisation en temps réel du nombre de répétitions effectuées, du score moyen et de l’état d’activité de la caméra.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="design-systeme-customisation-css">
+<h2>3. Design Système &amp; Customisation CSS<a class="headerlink" href="#design-systeme-customisation-css" title="Lien vers cette rubrique"></a></h2>
+<p>L’esthétique de KineAssist s’appuie sur une surcharge CSS poussée injectée via le markdown de Streamlit (fonction <code class="docutils literal notranslate"><span class="pre">apply_theme</span></code>) :</p>
+<ul class="simple">
+<li><p><strong>Typographie Moderne</strong> : Intégration de la police Google Font <strong>Sora</strong> pour la structure globale et les titres, et <strong>JetBrains Mono</strong> pour les affichages numériques de scores et de répétitions.</p></li>
+<li><p><strong>Thème Double Premium</strong> :
+*  <strong>Mode Clair (Teal &amp; Pure White)</strong> : Fond épuré gris très clair (<cite>#F8F9FB</cite>), surfaces blanches immaculées (<cite>#FFFFFF</cite>), bordures fines douces et accents de couleur sarcelle (teal, <cite>#0d9488</cite>).
+*  <strong>Mode Sombre (Deep Navy)</strong> : Fond bleu nuit profond (<cite>#0A0E19</cite>), surfaces sombres contrastées (<cite>#111827</cite>) pour réduire la fatigue visuelle lors des séances en intérieur.</p></li>
+<li><p><strong>Composants graphiques surchargés</strong> :
+*  <em>Formulaires et Inputs</em> : Coins arrondis de $12text{px}$, arrières-plans neutres, surbrillance au focus.
+*  <em>Boutons</em> : Boutons d’action sombres et contrastés pour le profil Kiné, et teal pour le profil Patient, avec des micro-animations fluides de transition.
+*  <em>Popups sémantiques</em> : Bulles de conseils RAG avec une bordure gauche colorée de $4text{px}$ identifiant la sévérité (Rouge pour les alertes critiques, Noir/Teal pour les conseils modérés).</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="retour-audio-multisensoriel-sound-tts-py">
+<h2>4. Retour Audio Multisensoriel (<cite>sound_tts.py</cite>)<a class="headerlink" href="#retour-audio-multisensoriel-sound-tts-py" title="Lien vers cette rubrique"></a></h2>
+<p>Afin de permettre au patient de corriger sa posture sans devoir fixer constamment l’écran, KineAssist intègre une rétroaction audio complète :</p>
+<section id="sons-wav-integres">
+<h3>Sons WAV intégrés<a class="headerlink" href="#sons-wav-integres" title="Lien vers cette rubrique"></a></h3>
+<p>Des fichiers audio compacts sont stockés dans le projet, encodés en <strong>Base64</strong> dans <code class="docutils literal notranslate"><span class="pre">sound_tts.py</span></code> et décodés à la volée dans le navigateur via une balise JavaScript <code class="docutils literal notranslate"><span class="pre">&lt;audio&gt;</span></code> :
+*  <strong>Ding aigu et brillant (`sound_good.wav`)</strong> : Se déclenche à la validation de chaque répétition correcte pour encourager le patient.
+*  <strong>Signal sonore descendant et grave (`sound_error.wav`)</strong> : Avertit le patient en cas de mouvement compensatoire dangereux ou de mauvaise posture prolongée.</p>
+</section>
+<section id="synthese-vocale-native-tts">
+<h3>Synthèse Vocale Native (TTS)<a class="headerlink" href="#synthese-vocale-native-tts" title="Lien vers cette rubrique"></a></h3>
+<p>Le système tire parti de la <strong>Web Speech API</strong> intégrée nativement dans tous les navigateurs modernes. Sans nécessiter de requêtes réseau ni de synthèse de voix Cloud (comme Google Cloud TTS ou ElevenLabs), KineAssist prononce des consignes claires en français :
+*  Annonce à voix haute du numéro de répétition validé (<em>« Répétition 3 »</em>).
+*  Lecture vocale des alertes critiques issues du moteur RAG pour guider l’ajustement physique immédiat (<em>« Veuillez fléchir davantage le genou droit »</em>).</p>
+<p>Exemple d’injection JS pour la synthèse vocale :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;fr-FR&quot;</span><span class="p">,</span> <span class="n">rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+    <span class="n">text_safe</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)[:</span><span class="mi">200</span><span class="p">]</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;script&gt;</span>
+<span class="s2">    (function()</span><span class="se">{{</span>
+<span class="s2">        try </span><span class="se">{{</span>
+<span class="s2">            window.speechSynthesis.cancel();</span>
+<span class="s2">            const u = new SpeechSynthesisUtterance(&#39;</span><span class="si">{</span><span class="n">text_safe</span><span class="si">}</span><span class="s2">&#39;);</span>
+<span class="s2">            u.lang  = &#39;</span><span class="si">{</span><span class="n">lang</span><span class="si">}</span><span class="s2">&#39;;</span>
+<span class="s2">            u.rate  = </span><span class="si">{</span><span class="n">rate</span><span class="si">}</span><span class="s2">;</span>
+<span class="s2">            window.speechSynthesis.speak(u);</span>
+<span class="s2">        </span><span class="se">}}</span><span class="s2"> catch(e) </span><span class="se">{{}}</span>
+<span class="s2">    </span><span class="se">}}</span><span class="s2">)();</span>
+<span class="s2">    &lt;/script&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">components</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2026, Aya IDHAMOUCH.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

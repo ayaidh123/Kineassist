@@ -1,0 +1,191 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moteur RAG Local &amp; Recherche Vectorielle &mdash; Documentation KineAssist 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+    <link rel="shortcut icon" href="_static/logoKine.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=05dadb3a"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=e6b791cb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0d9488" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            KineAssist
+              <img src="_static/logoKine.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Moteur RAG Local &amp; Recherche Vectorielle</a><ul>
+<li><a class="reference internal" href="#la-philosophie-du-rag-local">1. La Philosophie du RAG Local</a></li>
+<li><a class="reference internal" href="#le-pipeline-d-indexation-scripts-build-rag-index-py">2. Le Pipeline d’Indexation (<cite>scripts/build_rag_index.py</cite>)</a></li>
+<li><a class="reference internal" href="#recherche-semantique-suggestions-de-correction-core-rag-engine-py">3. Recherche Sémantique &amp; Suggestions de Correction (<cite>core/rag_engine.py</cite>)</a></li>
+<li><a class="reference internal" href="#base-de-regles-medicales-de-secours-fallback">4. Base de Règles Médicales de Secours (Fallback)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #0d9488" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">KineAssist</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Moteur RAG Local &amp; Recherche Vectorielle</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/rag.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="moteur-rag-local-recherche-vectorielle">
+<h1>Moteur RAG Local &amp; Recherche Vectorielle<a class="headerlink" href="#moteur-rag-local-recherche-vectorielle" title="Lien vers cette rubrique"></a></h1>
+<p>Le moteur de recherche s’appuyant sur la génération augmentée par récupération (<strong>RAG - Retrieval-Augmented Generation</strong>) de <strong>KineAssist</strong> permet d’associer des retours cliniques de haute précision aux mouvements du patient, de manière décentralisée.</p>
+<hr class="docutils" />
+<section id="la-philosophie-du-rag-local">
+<h2>1. La Philosophie du RAG Local<a class="headerlink" href="#la-philosophie-du-rag-local" title="Lien vers cette rubrique"></a></h2>
+<p>Dans la plupart des architectures RAG classiques, les questions des utilisateurs sont envoyées à des APIs d’LLMs (comme OpenAI, Anthropic) qui retournent la réponse après traitement dans le Cloud.</p>
+<p>Pour KineAssist, cette approche présentait des verrous cliniques et légaux majeurs :</p>
+<ul class="simple">
+<li><p>🔒 <strong>Confidentialité absolue</strong> : Les données cinétiques, les pathologies et les images vidéo d’un patient sont hautement sensibles. Elles ne doivent jamais transiter vers des serveurs tiers.</p></li>
+<li><p>🔒 <strong>Fonctionnement hors-ligne</strong> : Une rééducation doit pouvoir s’effectuer sans dépendance à des APIs payantes ou à une connexion internet haut débit constante.</p></li>
+<li><p>🔒 <strong>Déterminisme médical</strong> : Contrairement aux LLMs génératifs sujets aux hallucinations, KineAssist extrait des phrases exactes et vérifiées issues de consensus médicaux (Directives de la HAS).</p></li>
+</ul>
+<p>La recherche sémantique est donc <strong>100% locale</strong>, utilisant des représentations vectorielles denses calculées sur la machine du patient.</p>
+</section>
+<hr class="docutils" />
+<section id="le-pipeline-d-indexation-scripts-build-rag-index-py">
+<h2>2. Le Pipeline d’Indexation (<cite>scripts/build_rag_index.py</cite>)<a class="headerlink" href="#le-pipeline-d-indexation-scripts-build-rag-index-py" title="Lien vers cette rubrique"></a></h2>
+<p>L’indexation de la base de connaissances s’effectue en trois étapes :</p>
+<figure class="align-right">
+<a class="reference internal image-reference" href="_images/logokine.png"><img alt="KineAssist Logo" src="_images/logokine.png" style="width: 80px;" />
+</a>
+</figure>
+<ol class="arabic">
+<li><p><strong>Chargement et Découpage (Chunking)</strong> :
+Les documents cliniques officiels rédigés en français (<cite>data/protocols/*.txt</cite>) décrivant les thérapies post-LCA, coiffe des rotateurs, capsulites et mobilisation du rachis lombaire sont chargés. Ils sont segmentés en morceaux (<em>chunks</em>) de 400 mots avec un chevauchement (<em>overlap</em>) de 60 mots pour conserver le contexte aux frontières.</p></li>
+<li><p><strong>Calcul des Représentations Vectorielles (Embeddings)</strong> :
+Chaque chunk est encodé sous forme de vecteur dense à l’aide de la bibliothèque <code class="docutils literal notranslate"><span class="pre">sentence-transformers</span></code> et du modèle pré-entraîné léger <strong>``all-MiniLM-L6-v2``</strong> :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sentence_transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SentenceTransformer</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;all-MiniLM-L6-v2&quot;</span><span class="p">)</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">show_progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Ce modèle projette le sens sémantique de chaque phrase dans un espace vectoriel à <strong>384 dimensions</strong>.</p>
+</li>
+<li><p><strong>Construction de l’Index Vectoriel</strong> :
+Les vecteurs denses sont normalisés selon la norme L2 pour calculer directement la similarité cosinus. Ils sont ensuite chargés dans un index flat <strong>FAISS</strong> :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">faiss</span>
+<span class="n">dim</span> <span class="o">=</span> <span class="n">embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">faiss</span><span class="o">.</span><span class="n">IndexFlatIP</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+<span class="n">faiss</span><span class="o">.</span><span class="n">normalize_L2</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+<span class="n">index</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+<span class="n">faiss</span><span class="o">.</span><span class="n">write_index</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;data/rag_index/medical.index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>L’index FAISS et les chunks originaux sont sérialisés localement dans <code class="docutils literal notranslate"><span class="pre">data/rag_index/</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="recherche-semantique-suggestions-de-correction-core-rag-engine-py">
+<h2>3. Recherche Sémantique &amp; Suggestions de Correction (<cite>core/rag_engine.py</cite>)<a class="headerlink" href="#recherche-semantique-suggestions-de-correction-core-rag-engine-py" title="Lien vers cette rubrique"></a></h2>
+<p>Durant l’exécution des exercices par le patient, le flux de détection de mouvements identifie les écarts articulaires par rapport aux cibles presrites (ex: genou gauche trop peu fléchi de $24^circ$).</p>
+<p>Le moteur RAG s’active :</p>
+<ol class="arabic">
+<li><p><strong>Requête sémantique</strong> :
+Une requête naturelle est construite à partir des erreurs détectées :
+<em>« correction flexion genou gauche amplitude insuffisante cible 90 degres »</em></p></li>
+<li><p><strong>Recherche de Proximité Cosinus</strong> :
+Le moteur convertit cette requête en vecteur de 384 dimensions et recherche les 3 chunks les plus similaires dans l’index FAISS :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">encode</span><span class="p">([</span><span class="n">query</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">faiss</span><span class="o">.</span><span class="n">normalize_L2</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+<span class="n">scores</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Extraction &amp; Rendu</strong> :
+Les phrases les plus pertinentes des documents HAS correspondants sont extraites et injectées instantanément à l’écran du patient pour guider son effort de correction.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="base-de-regles-medicales-de-secours-fallback">
+<h2>4. Base de Règles Médicales de Secours (Fallback)<a class="headerlink" href="#base-de-regles-medicales-de-secours-fallback" title="Lien vers cette rubrique"></a></h2>
+<p>Si les dépendances vectorielles (<cite>faiss-cpu</cite>, <cite>sentence-transformers</cite>) ne sont pas installées ou si l’index n’a pas été généré localement, la classe <code class="docutils literal notranslate"><span class="pre">RAGEngine</span></code> bascule de manière transparente sur un <strong>mode de secours (fallback)</strong> :</p>
+<ul class="simple">
+<li><p>Le système utilise un dictionnaire de règles prédéfinies (la constante <code class="docutils literal notranslate"><span class="pre">RULES</span></code> dans <code class="docutils literal notranslate"><span class="pre">core/rag_engine.py</span></code>).</p></li>
+<li><p>Ces règles recouvrent l’intégralité des combinaisons d’exercices, d’articulations et de directions d’erreurs (flexion insuffisante, flexion excessive, rotation compensatoire, etc.).</p></li>
+<li><p>Le patient reçoit ainsi des consignes de correction toujours adaptées, garantissant la fiabilité clinique de KineAssist en toutes circonstances.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2026, Aya IDHAMOUCH.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

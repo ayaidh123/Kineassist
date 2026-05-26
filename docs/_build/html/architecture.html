@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture du Système &mdash; Documentation KineAssist 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+    <link rel="shortcut icon" href="_static/logoKine.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=05dadb3a"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=e6b791cb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0d9488" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            KineAssist
+              <img src="_static/logoKine.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Architecture du Système</a><ul>
+<li><a class="reference internal" href="#schema-du-pipeline-de-traitement">1. Schéma du Pipeline de Traitement</a></li>
+<li><a class="reference internal" href="#structure-des-fichiers-du-projet">2. Structure des Fichiers du Projet</a></li>
+<li><a class="reference internal" href="#dependances-techniques-majeures">3. Dépendances Techniques Majeures</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #0d9488" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">KineAssist</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Architecture du Système</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/architecture.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="architecture-du-systeme">
+<h1>Architecture du Système<a class="headerlink" href="#architecture-du-systeme" title="Lien vers cette rubrique"></a></h1>
+<p>La conception technique de <strong>KineAssist</strong> privilégie la modularité, la performance en temps réel et la protection de la vie privée. L’intégralité du traitement de l’image par l’IA et de la recherche vectorielle RAG est exécutée sur la machine hôte.</p>
+<hr class="docutils" />
+<section id="schema-du-pipeline-de-traitement">
+<h2>1. Schéma du Pipeline de Traitement<a class="headerlink" href="#schema-du-pipeline-de-traitement" title="Lien vers cette rubrique"></a></h2>
+<p>Le traitement d’une session d’exercice suit un cycle itératif en temps réel :</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>+--------------------------------------------------------------+
+|                        FLUX VIDEO                            |
+|              Capture webcam via OpenCV (hote)                |
++--------------------------------------------------------------+
+                               |
+                               v
++--------------------------------------------------------------+
+|                     ESTIMATION DE POSTURE                    |
+|           MediaPipe Pose (33 points clés 3D)                 |
++--------------------------------------------------------------+
+                               |
+                               v
++--------------------------------------------------------------+
+|                     CALCUL DES ANGLES                        |
+|  Trigonométrie 2D sur les points clés (angle_calculator.py)  |
++--------------------------------------------------------------+
+                               |
+         +---------------------+---------------------+
+         |                                           |
+         v                                           v
++--------------------+                      +--------------------+
+|  DETECTION REPS    |                      | RENDU VIDEO STREAM |
+| Automate à seuils  |                      | Tracé repères joint|
++--------------------+                      | OpenCV + Streamlit |
+         |                                  +--------------------+
+         v
++--------------------+
+|   SCORING DTW      |
+|  Comparaison avec  |
+|  courbe numpy ref  |
++--------------------+
+         |
+         v
++--------------------+
+|   MOTEUR RAG       |
+|  Recherche FAISS   |
+|  -&gt; Correction vocal|
++--------------------+
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="structure-des-fichiers-du-projet">
+<h2>2. Structure des Fichiers du Projet<a class="headerlink" href="#structure-des-fichiers-du-projet" title="Lien vers cette rubrique"></a></h2>
+<p>Le code source de KineAssist est organisé comme suit :</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Kineassist/
+├── app.py                     # Application Streamlit principale (Espace Patient)
+├── auth.py                    # Formulaires d&#39;authentification (Kiné / Patient)
+├── database.py                # Initialisation et requêtes SQLite (Bcrypt)
+├── run.py                     # Script de démarrage combiné (Streamlit + Landing Page)
+├── sound_tts.py               # Synthèse vocale browser et sons WAV (base64)
+├── config.toml                # Configuration de l&#39;environnement Streamlit
+├── fix_css.py                 # Script de nettoyage et d&#39;optimisation CSS
+├── generate_references.py     # Générateur de courbes numpy (.npy) de référence
+├── index.html                 # Landing page (serveur HTTP sur port 8000)
+├── mailer.py                  # Envoi des e-mails d&#39;invitation avec jetons d&#39;activation
+├── requirements.txt           # Liste des dépendances Python requises
+│
+├── core/                      # Moteur d&#39;analyse biomécanique
+│   ├── __init__.py
+│   ├── angle_calculator.py    # Trigonométrie et sélection des angles par exercice
+│   ├── comparator.py          # Scoring dynamique (FastDTW / Scipy)
+│   ├── pose_detector.py       # Wrapper de MediaPipe Pose
+│   ├── rag_engine.py          # Moteur de recherche sémantique s&#39;appuyant sur FAISS
+│   └── report_generator.py    # Générateur de comptes-rendus cliniques au format PDF
+│
+├── data/                      # Stockage des modèles et bases locales
+│   ├── protocols/             # Fichiers textes contenant les protocoles cliniques HAS
+│   ├── rag_index/             # Index vectoriel FAISS généré par sentence-transformers
+│   └── references/            # Fichiers .npy des mouvements types
+│
+├── pages/                     # Espace professionnel
+│   ├── 1_Dashboard_Kine.py    # Tableau de bord clinique complet du Kinésithérapeute
+│   └── 2_Rapport_PDF.py       # Vue de génération et de téléchargement du rapport
+│
+└── scripts/
+    └── build_rag_index.py     # Script d&#39;indexation vectorielle des fichiers .txt
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="dependances-techniques-majeures">
+<h2>3. Dépendances Techniques Majeures<a class="headerlink" href="#dependances-techniques-majeures" title="Lien vers cette rubrique"></a></h2>
+<p>KineAssist repose sur un ensemble de bibliothèques Python modernes, robustes et documentées :</p>
+<ul class="simple">
+<li><p><strong>Interface &amp; Web</strong> :
+*  <cite>streamlit</cite> : Utilisé pour la construction des interfaces interactives (Patient et Kiné).
+*  <cite>Jinja2</cite> et serveurs HTTP standards pour la Landing Page.</p></li>
+<li><p><strong>Vision par Ordinateur</strong> :
+*  <cite>mediapipe</cite> : Solution de Google pour l’estimation en temps réel de la pose corporelle.
+*  <cite>opencv-python-headless</cite> : Capture du flux webcam, manipulation matricielle d’images et surcharges graphiques de repères.</p></li>
+<li><p><strong>Traitement Numérique &amp; Algorithmes</strong> :
+*  <cite>numpy</cite> : Structure de données matricielle, traitement du signal des angles articulaires et lecture/écriture des trajectoires de référence.
+*  <cite>fastdtw</cite> &amp; <cite>scipy</cite> : Implémentation du Dynamic Time Warping pour aligner et évaluer deux séries temporelles de longueurs différentes.</p></li>
+<li><p><strong>Recherche Sémantique (RAG)</strong> :
+*  <cite>sentence-transformers</cite> : Encodage de phrases en vecteurs denses en s’appuyant sur le modèle pré-entraîné léger <cite>all-MiniLM-L6-v2</cite>.
+*  <cite>faiss-cpu</cite> : Recherche de plus proches voisins par similarité cosinus développée par Meta AI.</p></li>
+<li><p><strong>Sécurité &amp; Reporting</strong> :
+*  <cite>bcrypt</cite> : Hachage sécurisé des mots de passe.
+*  <cite>reportlab</cite> : Rendu programmatique de documents PDF vectoriels de qualité professionnelle.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2026, Aya IDHAMOUCH.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

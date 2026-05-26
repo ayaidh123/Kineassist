@@ -1,0 +1,199 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &amp; Configuration &mdash; Documentation KineAssist 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+    <link rel="shortcut icon" href="_static/logoKine.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=05dadb3a"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=e6b791cb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0d9488" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            KineAssist
+              <img src="_static/logoKine.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Installation &amp; Configuration</a><ul>
+<li><a class="reference internal" href="#prerequis-systeme">1. Prérequis Système</a></li>
+<li><a class="reference internal" href="#installation-des-dependances">2. Installation des Dépendances</a></li>
+<li><a class="reference internal" href="#scripts-de-pre-configuration-obligatoires">3. Scripts de Pré-configuration Obligatoires</a><ul>
+<li><a class="reference internal" href="#generation-des-courbes-numpy-de-reference-generate-references-py">Génération des courbes numpy de référence (<cite>generate_references.py</cite>)</a></li>
+<li><a class="reference internal" href="#indexation-du-rag-semantique-scripts-build-rag-index-py">Indexation du RAG Sémantique (<cite>scripts/build_rag_index.py</cite>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#demarrage-de-la-plateforme">4. Démarrage de la Plateforme</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #0d9488" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">KineAssist</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation &amp; Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installation.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation-configuration">
+<h1>Installation &amp; Configuration<a class="headerlink" href="#installation-configuration" title="Lien vers cette rubrique"></a></h1>
+<p>Ce guide vous accompagne pas à pas pour installer et déployer <strong>KineAssist</strong> sur votre environnement de développement local.</p>
+<hr class="docutils" />
+<section id="prerequis-systeme">
+<h2>1. Prérequis Système<a class="headerlink" href="#prerequis-systeme" title="Lien vers cette rubrique"></a></h2>
+<p>Avant de commencer, assurez-vous que votre système dispose de :</p>
+<figure class="align-right">
+<a class="reference internal image-reference" href="_images/logokine.png"><img alt="KineAssist Logo" src="_images/logokine.png" style="width: 80px;" />
+</a>
+</figure>
+<ul class="simple">
+<li><p><strong>Python 3.10 ou supérieur</strong> : Recommandé pour une compatibilité totale avec OpenCV et MediaPipe.</p></li>
+<li><p><strong>Une Webcam fonctionnelle</strong> : Nécessaire pour la capture et le traitement vidéo en temps réel.</p></li>
+<li><p><strong>Git</strong> : Pour cloner le dépôt.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="installation-des-dependances">
+<h2>2. Installation des Dépendances<a class="headerlink" href="#installation-des-dependances" title="Lien vers cette rubrique"></a></h2>
+<ol class="arabic">
+<li><p>Clonez le dépôt et placez-vous dans le répertoire du projet :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ayaidh123/Kineassist.git
+<span class="nb">cd</span><span class="w"> </span>Kineassist
+</pre></div>
+</div>
+</li>
+<li><p>Il est fortement conseillé de créer et d’activer un environnement virtuel (venv) pour isoler les dépendances :</p>
+<p>Sur Windows (PowerShell) :</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="n">venv</span>
+<span class="p">.\</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+</pre></div>
+</div>
+<p>Sur macOS / Linux :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+</pre></div>
+</div>
+</li>
+<li><p>Installez l’ensemble des bibliothèques nécessaires à l’aide de <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="scripts-de-pre-configuration-obligatoires">
+<h2>3. Scripts de Pré-configuration Obligatoires<a class="headerlink" href="#scripts-de-pre-configuration-obligatoires" title="Lien vers cette rubrique"></a></h2>
+<p>Avant de lancer la plateforme web pour la première fois, deux scripts d’initialisation doivent être exécutés.</p>
+<section id="generation-des-courbes-numpy-de-reference-generate-references-py">
+<h3>Génération des courbes numpy de référence (<cite>generate_references.py</cite>)<a class="headerlink" href="#generation-des-courbes-numpy-de-reference-generate-references-py" title="Lien vers cette rubrique"></a></h3>
+<p>Ce script génère les trajectoires cinétiques idéales de référence (les fichiers <code class="docutils literal notranslate"><span class="pre">.npy</span></code>) pour les exercices. Il les stocke dans le dossier <code class="docutils literal notranslate"><span class="pre">data/references/</span></code> :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>generate_references.py
+</pre></div>
+</div>
+</section>
+<section id="indexation-du-rag-semantique-scripts-build-rag-index-py">
+<h3>Indexation du RAG Sémantique (<cite>scripts/build_rag_index.py</cite>)<a class="headerlink" href="#indexation-du-rag-semantique-scripts-build-rag-index-py" title="Lien vers cette rubrique"></a></h3>
+<p>Ce script charge les guides officiels de rééducation de la HAS (fichiers <code class="docutils literal notranslate"><span class="pre">.txt</span></code> du répertoire <code class="docutils literal notranslate"><span class="pre">data/protocols/</span></code>), calcule leurs empreintes sémantiques vectorielles de 384 dimensions via le modèle local léger <code class="docutils literal notranslate"><span class="pre">all-MiniLM-L6-v2</span></code>, puis génère et sauvegarde l’index vectoriel local <strong>FAISS</strong> dans <code class="docutils literal notranslate"><span class="pre">data/rag_index/</span></code> :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/build_rag_index.py
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="demarrage-de-la-plateforme">
+<h2>4. Démarrage de la Plateforme<a class="headerlink" href="#demarrage-de-la-plateforme" title="Lien vers cette rubrique"></a></h2>
+<p>KineAssist intègre un script de démarrage unifié <code class="docutils literal notranslate"><span class="pre">run.py</span></code> qui gère automatiquement le lancement simultané de deux serveurs locaux :</p>
+<ol class="arabic simple">
+<li><p><strong>Le serveur de la Landing Page</strong> (présentation générale) : Démarré sur le port standard HTTP <strong>8000</strong>.</p></li>
+<li><p><strong>Le serveur d’application Streamlit</strong> (Portails Patient et Kiné) : Démarré sur le port <strong>8501</strong>.</p></li>
+</ol>
+<p>Pour lancer KineAssist, exécutez simplement :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>run.py
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Le script démarrera les serveurs, puis ouvrira automatiquement votre navigateur par défaut à l’adresse de la Landing Page : <code class="docutils literal notranslate"><span class="pre">http://localhost:8000</span></code>.</p></li>
+<li><p>Pour accéder directement à la plateforme clinique et démarrer une session, rendez-vous sur : <code class="docutils literal notranslate"><span class="pre">http://localhost:8501</span></code>.</p></li>
+<li><p>Pour arrêter l’application, effectuez la combinaison <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">C</span></code> dans votre terminal.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2026, Aya IDHAMOUCH.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
