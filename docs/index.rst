@@ -28,7 +28,7 @@ Bienvenue dans la Documentation KineAssist
 Accéder à l'Application
 -----------------------
 
-L'application est déployée sur **Streamlit Community Cloud** et accessible directement depuis votre navigateur, sans installation requise.
+L'application est déployée sur **Streamlit Community Cloud** et accessible directement depuis votre navigateur, sans  aucune installation requise.
 
 .. raw:: html
 
