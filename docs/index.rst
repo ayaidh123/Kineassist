@@ -25,6 +25,41 @@ Bienvenue dans la Documentation KineAssist
 
 ----
 
+Accéder à l'Application
+-----------------------
+
+L'application est déployée sur **Streamlit Community Cloud** et accessible directement depuis votre navigateur, sans installation requise.
+
+.. raw:: html
+
+   <div align="center" style="margin: 24px 0;">
+     <a href="https://intissarlayad.github.io/kineassist/" target="_blank"
+        style="display: inline-block; background-color: #FF4B4B; color: white; padding: 12px 28px;
+               border-radius: 8px; font-size: 16px; font-weight: bold; text-decoration: none;
+               font-family: sans-serif; letter-spacing: 0.5px;">
+       🚀 &nbsp; Ouvrir KineAssist
+     </a>
+   </div>
+
+.. list-table::
+   :widths: 30 70
+   :header-rows: 1
+
+   * - Champ
+     - Valeur
+   * - 🌐 **URL de l'application**
+     - `https://intissarlayad.github.io/kineassist/ <https://intissarlayad.github.io/kineassist/>`_
+   * - ☁️ **Plateforme de déploiement**
+     - Streamlit Community Cloud
+   * - 📡 **Statut**
+     - ✅ Déployée et accessible en ligne
+   * - 🖥️ **Compatibilité**
+     - Chrome, Firefox, Edge (navigateur moderne requis)
+   * - 📷 **Prérequis matériel**
+     - Webcam fonctionnelle pour la détection de mouvement
+
+----
+
 À propos
 --------
 
@@ -75,11 +110,11 @@ Liens Rapides
 
    * - Ressource
      - Lien
+   * - 🚀 **Application en ligne**
+     - `KineAssist — Live <https://intissarlayad.github.io/kineassist/>`_
    * - 📦 Code Source
      - `GitHub Repository <https://github.com/ayaidh123/Kineassist>`_
-   * - 🚀 Site Web de Présentation
-     - `Landing Page locale <http://localhost:8000>`_
-   * - 🖥️ Application Clinique
+   * - 🖥️ Application Clinique (local)
      - `Streamlit App locale <http://localhost:8501>`_
 
 ----
