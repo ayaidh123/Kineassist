@@ -16,6 +16,13 @@
   <p>
     <em>Suivi des exercices de rééducation en temps réel — double interface kiné & patient,<br/>détection de mouvement par webcam, retour vocal et suivi de progression hebdomadaire.</em>
   </p>
+
+  <p>
+    <a href="https://intissarlayad.github.io/kineassist/" target="_blank">
+      <img src="https://img.shields.io/badge/🚀%20Live%20Demo-Déployée%20en%20ligne-58a6ff?style=for-the-badge" alt="Live Demo" />
+    </a>
+  </p>
+
 </div>
 
 ---
@@ -40,7 +47,7 @@
 
 ## Vue d'ensemble
 
-**KineAssist** est une application web à double interface dédiée au suivi de la rééducation kinésithérapique à distance. Elle permet à un kinésithérapeute de créer des protocoles d'exercices personnalisés pour ses patients, et au patient d'exécuter ces exercices de manière autonome depuis chez lui, guidé par un système de détection de mouvement en temps réel.
+**KineAssist** est une application web à double interface dédiée au suivi de la rééducation kinésithérapique à distance, **désormais déployée et accessible en ligne**. Elle permet à un kinésithérapeute de créer des protocoles d'exercices personnalisés pour ses patients, et au patient d'exécuter ces exercices de manière autonome depuis chez lui, guidé par un système de détection de mouvement en temps réel.
 
 L'application repose sur **MediaPipe Pose**, une bibliothèque de Google permettant l'estimation de la posture humaine via webcam. Chaque exercice est évalué automatiquement : le système analyse la qualité du mouvement, compte les répétitions et attribue un score, sans intervention humaine directe.
 
@@ -385,10 +392,10 @@ KineAssist applique plusieurs bonnes pratiques de sécurité :
 - [x] Tableau de bord analytique pour le kinésithérapeute
 - [x] Retour vocal pendant les exercices (synthèse vocale)
 - [x] Gestion du profil patient (photo, poids, taille, antécédents)
+- [x] Déploiement en ligne
 
 ### Améliorations prévues
 
-- [ ] Déploiement sur Streamlit Community Cloud
 - [ ] Notifications email automatiques en cas d'alerte (inactivité, score en baisse)
 - [ ] Tableau de bord analytique avancé avec visualisations interactives
 - [ ] Ajout de nouveaux exercices au catalogue via l'interface kiné
@@ -409,7 +416,7 @@ Ce projet a été développé par deux étudiantes en intelligence artificielle 
 - GitHub : [@intissarlayad](https://github.com/intissarlayad)
 - LinkedIn : [intissar-layad](https://www.linkedin.com/in/intissar-layad-07444b377)
 
-> Projet académique réalisé dans le cadre d'un cours de Computer Vision, dont le domaine d'application — la santé numérique et la rééducation à distance — a été entièrement choisi et conçu par l'équipeLe projet combine MediaPipe, OpenCV et un moteur RAG pour créer une plateforme de suivi kinésithérapeutique : analyse du mouvement en temps réel, scoring des exercices et feedback correctif automatisé.
+> Projet académique réalisé dans le cadre d'un cours de Computer Vision, dont le domaine d'application — la santé numérique et la rééducation à distance — a été entièrement choisi et conçu par l'équipe. Le projet combine MediaPipe, OpenCV et un moteur RAG pour créer une plateforme de suivi kinésithérapeutique : analyse du mouvement en temps réel, scoring des exercices et feedback correctif automatisé.
 
 <div align="center">
   <sub>Built with ❤️ for accessible physiotherapy rehabilitation.</sub>
